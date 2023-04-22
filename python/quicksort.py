@@ -1,9 +1,4 @@
-def swap(i, j, A):
-    temp = A[i]
-    A[i] = A[j]
-    A[j] = temp
-    
-def partition(arr, l, r):
+ def partition(arr, l, r):
     pivot = arr[r]
     i = l-1
     for j in range(l, r):
