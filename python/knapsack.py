@@ -1,47 +1,34 @@
-def knapsack(n, weight, profit, capacity):
-    sol = [0.0] * n
+def knapsack(n,w,p,capacity):
+    sol = [0.0]*n
     tp = 0
     u = capacity
-
+    
     for i in range(n):
-        if weight[i] > u:
+        if w[i]>u:
             break
         else:
             sol[i] = 1.0
-            tp += profit[i]
-            u -= weight[i]
-
-    if i < n:
-        sol[i] = u / weight[i]
-
-    tp += (sol[i] * profit[i])
-
-    print("The solution vector is: ", end="")
+            tp = tp+p[i]
+            u = u-w[i]
+    if i<n:
+        sol[i] = u/w[i]
+    tp = tp + (sol[i]*p[i])
+    print("Solution vector:")
     for i in range(n):
-        print(sol[i], end="\t")
+        print(sol[i],end="\t")
+    print("\nMax profit: ",tp)
 
-    print("\n\nThe maximum profit is:", tp)
+n = int(input("Enter no. of items: "))
+w = [0.0]*n
+p = [0.0]*n
 
+print("\n enter profit and weight")
+for i in range(n):
+    p[i], w[i] = map(float,input().split())
+capacity = float(input("\n Enter capacity of knapsack: "))
+ratio = [0.0]*n
+for i in range(n):
+    ratio[i] = p[i]/w[i]
 
-num = int(input("Enter the no. of objects: "))
-weight = [0.0] * num
-profit = [0.0] * num
+knapsack(n,w,p,capacity)
 
-print("\nEnter the weight and profit of each object:")
-print("Profit, Weight")
-for i in range(num):
-    profit[i], weight[i] = map(float, input().split())
-
-capacity = float(input("\nEnter the capacity of the knapsack: "))
-ratio = [0.0] * num
-for i in range(num):
-    ratio[i] = profit[i] / weight[i]
-# sorting function
-for i in range(num):
-    for j in range(i+1, num):
-        if ratio[i] < ratio[j]:
-            ratio[i], ratio[j] = ratio[j], ratio[i]
-            weight[i], weight[j] = weight[j], weight[i]
-            profit[i], profit[j] = profit[j], profit[i]
-
-knapsack(num, weight, profit, capacity)

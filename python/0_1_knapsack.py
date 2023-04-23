@@ -1,25 +1,42 @@
-import numpy as np
+def knapsack(max_weight, weights, values, num_items):
+    # initialize V matrix
+    V = [[0 for x in range(max_weight+1)] for y in range(num_items+1)]
+    
+    # fill first row and column with 0
+    for i in range(num_items+1):
+        V[i][0] = 0
+    for w in range(max_weight+1):
+        V[0][w] = 0
+    
+    # fill the remaining V matrix
+    for i in range(1, num_items+1):
+        for w in range(1, max_weight+1):
+            if weights[i-1] <= w:
+                if values[i-1] + V[i-1][w-weights[i-1]] > V[i-1][w]:
+                    V[i][w] = values[i-1] + V[i-1][w-weights[i-1]]
+                else:
+                    V[i][w] = V[i-1][w]
+            else:
+                V[i][w] = V[i-1][w]
+    
+    # find the solution set
+    i = num_items
+    k = max_weight
+    solution_set = []
+    while i > 0 and k > 0:
+        if V[i][k] != V[i-1][k]:
+            solution_set.append(i-1)
+            k = k - weights[i-1]
+        i = i - 1
+    
+    return (V[num_items][max_weight], solution_set)
 
-profit, weight = [0], [0]
-noOfItems = int(input('Enter number of items: '))
-maxWeight = int(input('Enter capacity of container: '))
+W = 8
+wt = [2,3,4,5]
+val = [1,2,5,6]
+n = len(wt)
 
-# taking input of profits and weights of items
-for i in range(noOfItems):
-    profit.append(int(input(f'Enter profit of item {i+1}: ')))
-    weight.append(int(input(f'Enter weight of item {i+1}: ')))
+max_value, solution_set = knapsack(W, wt, val, n)
 
-# initializing the table with zeros
-table = np.zeros((noOfItems + 1, maxWeight + 1))
-
-# filling up the table using dynamic programming approach
-for i in range(1, noOfItems + 1):
-    for w in range(1, maxWeight + 1):
-        if weight[i] <= w:
-            table[i][w] = max(profit[i] + table[i-1][w-weight[i]], table[i-1][w])
-        else:
-            table[i][w] = table[i-1][w]
-
-# printing the final table and the maximum profit obtained
-print('\n', table)
-print(f'\nMaximum Profit = {table[noOfItems][maxWeight]}')
+print("Maximum profit:", max_value)
+print("Solution set:", solution_set)
