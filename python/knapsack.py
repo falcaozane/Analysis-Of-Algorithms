@@ -28,15 +28,15 @@ weight = [0.0] * num
 profit = [0.0] * num
 
 print("\nEnter the weight and profit of each object:")
-print("Weight , Profit")
+print("Profit, Weight")
 for i in range(num):
-    weight[i], profit[i] = map(float, input().split())
+    profit[i], weight[i] = map(float, input().split())
 
 capacity = float(input("\nEnter the capacity of the knapsack: "))
 ratio = [0.0] * num
 for i in range(num):
     ratio[i] = profit[i] / weight[i]
-
+# sorting function
 for i in range(num):
     for j in range(i+1, num):
         if ratio[i] < ratio[j]:
