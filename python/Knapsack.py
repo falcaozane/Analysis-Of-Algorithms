@@ -18,8 +18,6 @@ def knapsack(n,w,p,capacity):
         print(sol[i],end="\t")
     print("\nMax profit: ",tp)
 
-
-
 n = int(input("Enter no. of items: "))
 w = [0.0]*n
 p = [0.0]*n
