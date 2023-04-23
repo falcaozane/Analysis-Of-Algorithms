@@ -36,7 +36,7 @@ capacity = float(input("\nEnter the capacity of the knapsack: "))
 ratio = [0.0] * num
 for i in range(num):
     ratio[i] = profit[i] / weight[i]
-
+# sorting function
 for i in range(num):
     for j in range(i+1, num):
         if ratio[i] < ratio[j]:
